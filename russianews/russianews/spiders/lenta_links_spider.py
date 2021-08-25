@@ -26,9 +26,9 @@ class LentaSpider(scrapy.Spider):
     def parse(self, response):
         for tag in response.css('div.item'):
             yield {
-                'title' : tag.css('a.titles ::text').get(),
-                'time': tag.css('span.g-date ::text').get(),
-                'href': tag.css('a.titles ::attr(href)').get()
+                'title' : tag.css('a.titles ::text').get(default='None'),
+                'time': tag.css('span.g-date ::text').get(default='None'),
+                'href': tag.css('a.titles ::attr(href)').get(default='None')
             }
 
 
