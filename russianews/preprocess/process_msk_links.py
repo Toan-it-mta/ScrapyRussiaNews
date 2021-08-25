@@ -16,20 +16,21 @@ def split_msk_links(path_to_file_json_links='./result/msk_all_links.jl'):
     group4 = []
     # print(jsonObj)
     for obj in jsonObj['href']:
-        print(obj)
         if re.match(regexs[0], obj):
             group1.append(obj)
         elif re.match((regexs[1]), obj):
             group2.append(obj)
         elif re.match((regexs[2]), obj) or re.match(regexs[3], obj):
-            if(requests.get('https://www.kp.ru{}'.format(obj)).status_code!=404):
-                group3.append('https://www.kp.ru{}'.format(obj))
+            group3.append('https://www.kp.ru{}'.format(obj))
         else:
             group4.append(obj)
 
     result = set(group1 + group2 + group3)
+    sorted(result)
+
+
     df = pd.DataFrame(result, columns=['href'])
-    df.to_json('result.jsonl', orient='records', lines=True)
+    df.to_json('last_msk_links.jl', orient='records', lines=True)
 
 
 if __name__ == '__main__':
